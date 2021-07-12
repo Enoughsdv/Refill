@@ -1,0 +1,7 @@
+main: net.enoughdv.refill.Refill
+name: Refill
+author: Enoughsdv
+version: ${project.version}
+commands:
+    refill:
+        description: Refill Command
