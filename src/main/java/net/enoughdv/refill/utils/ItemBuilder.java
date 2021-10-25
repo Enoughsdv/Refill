@@ -1,12 +1,12 @@
 package net.enoughdv.refill.utils;
 
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.enchantments.Enchantment;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
 
 public class ItemBuilder {
 
@@ -15,7 +15,6 @@ public class ItemBuilder {
     private String title;
     private int amount = 1;
     private List<String> lores;
-    private byte materialData;
     private HashMap<Enchantment, Integer> enchantments = new HashMap<>();
     private ItemStack itemStack;
     private boolean unbreakable = false;
@@ -32,27 +31,27 @@ public class ItemBuilder {
         this.itemStack = itemStack;
     }
 
-    public ItemBuilder material(Material material){
+    public ItemBuilder material(Material material) {
         this.material = material;
         return this;
     }
 
-    public ItemBuilder durability(short durability){
+    public ItemBuilder durability(short durability) {
         this.durability = durability;
         return this;
     }
 
-    public ItemBuilder title(String title){
+    public ItemBuilder title(String title) {
         this.title = title;
         return this;
     }
 
-    public ItemBuilder amount(int amount){
+    public ItemBuilder amount(int amount) {
         this.amount = amount;
         return this;
     }
 
-    public ItemStack build(){
+    public ItemStack build() {
         
         ItemStack itemStack = this.itemStack;
         
@@ -69,9 +68,9 @@ public class ItemBuilder {
         if (this.durability != null)
             itemStack.setDurability(this.durability);
         if (this.title != null)
-            meta.setDisplayName(CC.translate("&r" + this.title));
+            meta.setDisplayName(MessageUtil.translate("&r" + this.title));
         if (this.lores != null && this.lores.size() > 0)
-            meta.setLore(CC.translate(this.lores));
+            meta.setLore(MessageUtil.translate(this.lores));
         itemStack.setItemMeta(meta);
         
         return itemStack;

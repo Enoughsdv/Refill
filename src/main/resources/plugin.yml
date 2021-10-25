@@ -1,4 +1,4 @@
-main: net.enoughdv.refill.Refill
+main: net.enoughdv.refill.RefillPlugin
 name: Refill
 author: Enoughsdv
 version: ${project.version}

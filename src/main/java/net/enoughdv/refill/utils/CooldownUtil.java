@@ -1,8 +1,8 @@
 package net.enoughdv.refill.utils;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.HashMap;
 
 /**
  *
@@ -17,14 +17,14 @@ public class CooldownUtil {
     private final UUID id;
     private final String cooldownName;
  
-    public CooldownUtil(UUID id, String cooldownName, int timeInSeconds){
+    public CooldownUtil(UUID id, String cooldownName, int timeInSeconds) {
         this.id = id;
         this.cooldownName = cooldownName;
         this.timeInSeconds = timeInSeconds;
     }
  
-    public static boolean isInCooldown(UUID id, String cooldownName){
-        if(getTimeLeft(id, cooldownName)>=1){
+    public static boolean isInCooldown(UUID id, String cooldownName) {
+        if(getTimeLeft(id, cooldownName)>=1) {
             return true;
         } else {
             stop(id, cooldownName);
@@ -32,18 +32,18 @@ public class CooldownUtil {
         }
     }
  
-    private static void stop(UUID id, String cooldownName){
+    private static void stop(UUID id, String cooldownName) {
         CooldownUtil.cooldowns.remove(id+cooldownName);
     }
  
-    private static CooldownUtil getCooldown(UUID id, String cooldownName){
+    private static CooldownUtil getCooldown(UUID id, String cooldownName) {
         return cooldowns.get(id.toString()+cooldownName);
     }
  
-    public static int getTimeLeft(UUID id, String cooldownName){
+    public static int getTimeLeft(UUID id, String cooldownName) {
         CooldownUtil cooldown = getCooldown(id, cooldownName);
         int f = -1;
-        if(cooldown != null){
+        if(cooldown != null) {
             long now = System.currentTimeMillis();
             long cooldownTime = cooldown.start;
             int totalTime = cooldown.timeInSeconds;
@@ -53,7 +53,7 @@ public class CooldownUtil {
         return f;
     }
  
-    public void start(){
+    public void start() {
         this.start = System.currentTimeMillis();
         cooldowns.put(this.id.toString()+this.cooldownName, this);
     }

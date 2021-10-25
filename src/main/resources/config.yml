@@ -3,12 +3,12 @@ SIGN_SETTINGS:
         SECONDS: 20
         IN_COOLDOWN_MESSAGE: "&cYou are currently in cooldown, wait %time% seconds."
     LINES:
-        - "&7&m----------"
+        - "&r"
         - "&b&lRefill"
-        - "&e(Right click)"
-        - "&7&m----------"
+        - "&7(Right click)"
+        - "&r"
 
-NO_PERMISSIONS: "&cYou don't have permissions"
+NO_PERMISSIONS: "&cYou don't have permissions."
 
 INVENTORY_SETTINGS:
     OPTIONS:

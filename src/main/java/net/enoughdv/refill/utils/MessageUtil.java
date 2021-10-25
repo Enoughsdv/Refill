@@ -2,10 +2,10 @@ package net.enoughdv.refill.utils;
 
 import org.bukkit.ChatColor;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
-public class CC {
+public class MessageUtil {
     
     public static String translate(String message){
         return ChatColor.translateAlternateColorCodes('&', message);
