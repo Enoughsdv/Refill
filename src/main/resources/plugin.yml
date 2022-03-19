@@ -1,7 +1,4 @@
-main: net.enoughdv.refill.RefillPlugin
+main: io.github.enoughsdv.refill.RefillPlugin
 name: Refill
 author: Enoughsdv
 version: ${project.version}
-commands:
-    refill:
-        description: Refill Command

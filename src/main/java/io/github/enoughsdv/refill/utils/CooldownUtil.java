@@ -1,4 +1,4 @@
-package net.enoughdv.refill.utils;
+package io.github.enoughsdv.refill.utils;
 
 import java.util.Map;
 import java.util.UUID;
@@ -33,7 +33,7 @@ public class CooldownUtil {
     }
 
     private static void stop(UUID id, String cooldownName) {
-        CooldownUtil.cooldowns.remove(id + cooldownName);
+        cooldowns.remove(id + cooldownName);
     }
 
     private static CooldownUtil getCooldown(UUID id, String cooldownName) {

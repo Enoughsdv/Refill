@@ -1,9 +1,9 @@
-package net.enoughdv.refill.listeners;
+package io.github.enoughsdv.refill.listeners;
 
-import net.enoughdv.refill.RefillPlugin;
-import net.enoughdv.refill.utils.ItemBuilder;
-import net.enoughdv.refill.utils.MessageUtil;
-import net.enoughdv.refill.utils.CooldownUtil;
+import io.github.enoughsdv.refill.RefillPlugin;
+import io.github.enoughsdv.refill.utils.ItemBuilder;
+import io.github.enoughsdv.refill.utils.MessageUtil;
+import io.github.enoughsdv.refill.utils.CooldownUtil;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -36,11 +36,10 @@ public class PlayerListener implements Listener {
                 MessageUtil.translate(config.getString("INVENTORY_SETTINGS.OPTIONS.TITLE")));
 
         for (int i = 0; i < config.getInt("INVENTORY_SETTINGS.OPTIONS.SIZE"); i++) {
-            inventory.setItem(i, new ItemBuilder()
-                    .material(Material.valueOf(config.getString("INVENTORY_SETTINGS.FILLER.MATERIAL")))
-                    .amount(config.getInt("INVENTORY_SETTINGS.FILLER.AMOUNT"))
-                    .durability((short) config.getInt("INVENTORY_SETTINGS.FILLER.DATA"))
-                    .build());
+            inventory.setItem(i,
+                    new ItemBuilder(Material.valueOf(config.getString("INVENTORY_SETTINGS.FILLER.MATERIAL")))
+                            .amount(config.getInt("INVENTORY_SETTINGS.FILLER.AMOUNT"))
+                            .durability((short) config.getInt("INVENTORY_SETTINGS.FILLER.DATA")).build());
         }
 
         for (String string : config.getStringList("INVENTORY_SETTINGS.ITEMS")) {
@@ -62,9 +61,7 @@ public class PlayerListener implements Listener {
                 if (sign.getLine(id).equalsIgnoreCase(MessageUtil.translate(lines))) {
 
                     if (!CooldownUtil.isInCooldown(player.getUniqueId(), "REFILL")) {
-
                         player.openInventory(inventory);
-
                         return;
                     }
 
