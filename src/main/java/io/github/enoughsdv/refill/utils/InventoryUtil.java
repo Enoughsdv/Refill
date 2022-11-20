@@ -37,16 +37,19 @@ public class InventoryUtil {
         );
 
         int optionSize = config.getInt("INVENTORY_SETTINGS.OPTIONS.SIZE");
+        
         int fillerData = config.getInt("INVENTORY_SETTINGS.FILLER.DATA");
         int fillerAmount = config.getInt("INVENTORY_SETTINGS.FILLER.AMOUNT");
-
         Material fillerMaterial = Material.valueOf(config.getString("INVENTORY_SETTINGS.FILLER.MATERIAL"));
-
+        
+        ItemStack filterItem = 
+            new ItemBuilder(fillerMaterial)
+                .amount(fillerAmount)
+                .durability(fillerData)
+                .build();
+        
         for (int i = 0; i < optionSize; i++) {
-            inventory.setItem(i,
-                new ItemBuilder(fillerMaterial)
-                    .amount(fillerAmount)
-                    .durability(fillerData).build());
+            inventory.setItem(i, filterItem);
         }
 
         List<String> items = config.getStringList("INVENTORY_SETTINGS.ITEMS");
