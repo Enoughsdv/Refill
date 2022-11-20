@@ -4,8 +4,8 @@ SIGN_SETTINGS:
         IN_COOLDOWN_MESSAGE: "&cYou are currently in cooldown, wait %time% seconds."
     LINES:
         - "&r"
-        - "&3&lRefill"
-        - "&7(Right click)"
+        - "&9&lRefill"
+        - "&7(&fRight click&7)"
         - "&r"
     LINE_TO_SET: "[REFILL]"
 

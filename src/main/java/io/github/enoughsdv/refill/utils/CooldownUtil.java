@@ -57,5 +57,4 @@ public class CooldownUtil {
         this.start = System.currentTimeMillis();
         cooldowns.put(this.id.toString() + this.cooldownName, this);
     }
-
 }
