@@ -48,12 +48,8 @@ public class PlayerListener implements Listener {
         int id = 0;
 
         for (String lines : settingLines) {
-            if (lines.contains(sign.getLine(id))){
-                player.sendMessage("test1");
-            }
 
             if (sign.getLine(id).equalsIgnoreCase(MessageUtil.translate(lines))) {
-                player.sendMessage("test2");
 
                 if (!CooldownUtil.isInCooldown(player.getUniqueId(), "REFILL")) {
                     player.openInventory(InventoryUtil.getInventory());
