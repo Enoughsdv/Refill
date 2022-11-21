@@ -1,7 +1,7 @@
 SIGN_SETTINGS:
     COOLDOWN_OPTIONS:
         SECONDS: 20
-        IN_COOLDOWN_MESSAGE: "&cYou are currently in cooldown, wait %time% seconds."
+        IN_COOLDOWN_MESSAGE: "&cYou are currently in cooldown, wait %time% minutes."
     LINES:
         - "&r"
         - "&9&lRefill"
@@ -14,7 +14,7 @@ NO_PERMISSIONS: "&cYou don't have permissions"
 INVENTORY_SETTINGS:
     OPTIONS:
         SIZE: 54
-        TITLE: "&3&Refill Menu"
+        TITLE: "&0&lRefill Menu"
     FILLER:
         MATERIAL: POTION
         DATA: 16421

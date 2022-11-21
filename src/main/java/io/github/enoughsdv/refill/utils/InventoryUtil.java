@@ -2,7 +2,6 @@ package io.github.enoughsdv.refill.utils;
 
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -19,34 +18,37 @@ public class InventoryUtil {
         return inventory;
     }
 
-    public static InventoryUtil start(){
-        if(inventory == null){
-            return new InventoryUtil();
+    public static InventoryUtil startUtil(boolean forceStart){
+        if(inventory == null || forceStart){
+            return new InventoryUtil(RefillPlugin.getInstance());
         }
         return null;
     }
 
-    private InventoryUtil(){
-        FileConfiguration config = RefillPlugin.getInstance().getConfig();
+    private InventoryUtil(RefillPlugin plugin){
+        FileConfiguration config = plugin.getConfig();
         
         //InventoryHolder owner, int size, String title
-        inventory = Bukkit.createInventory(
+        inventory = plugin.getServer().createInventory(
             null,
             config.getInt("INVENTORY_SETTINGS.OPTIONS.SIZE"),
             MessageUtil.translate(config.getString("INVENTORY_SETTINGS.OPTIONS.TITLE"))
         );
 
         int optionSize = config.getInt("INVENTORY_SETTINGS.OPTIONS.SIZE");
+        
         int fillerData = config.getInt("INVENTORY_SETTINGS.FILLER.DATA");
         int fillerAmount = config.getInt("INVENTORY_SETTINGS.FILLER.AMOUNT");
-
         Material fillerMaterial = Material.valueOf(config.getString("INVENTORY_SETTINGS.FILLER.MATERIAL"));
 
+        ItemStack filterItem = 
+            new ItemBuilder(fillerMaterial)
+                .amount(fillerAmount)
+                .durability(fillerData)
+                .build();
+        
         for (int i = 0; i < optionSize; i++) {
-            inventory.setItem(i,
-                new ItemBuilder(fillerMaterial)
-                    .amount(fillerAmount)
-                    .durability(fillerData).build());
+            inventory.setItem(i, filterItem);
         }
 
         List<String> items = config.getStringList("INVENTORY_SETTINGS.ITEMS");
@@ -94,7 +96,7 @@ public class InventoryUtil {
         }
 
         material = Material.getMaterial(Integer.parseInt(type));
-
+        
         if (material == null || !isInteger(durabilityString)) {
             return null;
         }

@@ -6,10 +6,11 @@ import io.github.enoughsdv.refill.utils.MessageUtil;
 import io.github.enoughsdv.refill.utils.CooldownUtil;
 import io.github.enoughsdv.refill.utils.InventoryUtil;
 
+import org.bukkit.block.Sign;
+
 import java.util.List;
 
-import org.bukkit.block.Sign;
-import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 
 import org.bukkit.entity.Player;
 
@@ -18,18 +19,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
-
-import org.bukkit.inventory.ItemStack;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class PlayerListener implements Listener {
 
     private final FileConfiguration config = RefillPlugin.getInstance().getConfig();
-    private List<String> settingLines = config.getStringList("SIGN_SETTINGS.LINES");
-    private String cooldownMessage = MessageUtil.translate(config.getString("SIGN_SETTINGS.COOLDOWN_OPTIONS.IN_COOLDOWN_MESSAGE"));
-    
+    private final String cooldownMessage = MessageUtil.translate(config.getString("SIGN_SETTINGS.COOLDOWN_OPTIONS.IN_COOLDOWN_MESSAGE"));
+    private final List<String> signLines = MessageUtil.translateStrings(config.getStringList("SIGN_SETTINGS.LINES"));
+
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -38,56 +36,36 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        Block block = event.getClickedBlock();
+        BlockState blockState = event.getClickedBlock().getState();
 
-        if(!(block.getState() instanceof Sign)){
+        if(!(blockState instanceof Sign)){
             return;
         }
 
-        Sign sign = (Sign) block.getState();
-        int id = 0;
+        Sign sign = (Sign)blockState;
+        boolean equals = true;
+        byte id = 0;
 
-        for (String lines : settingLines) {
-            if (lines.contains(sign.getLine(id))){
-                player.sendMessage("test1");
-            }
-
-            if (sign.getLine(id).equalsIgnoreCase(MessageUtil.translate(lines))) {
-                player.sendMessage("test2");
-
-                if (!CooldownUtil.isInCooldown(player.getUniqueId(), "REFILL")) {
-                    player.openInventory(InventoryUtil.getInventory());
-                    return;
-                }
-
-                player.sendMessage(
-                    cooldownMessage.replace(
-                        "%time%",
-                        String.valueOf(CooldownUtil.getTimeLeft(player.getUniqueId(), "REFILL")))
-                );
-                return;
+        for(String configLine : signLines){
+            if(!sign.getLine(id).equals(configLine)){
+                equals = false;
+                break;
             }
             id++;
         }
-    }
+
+        if(equals){
+            if (!CooldownUtil.isInCooldown(player.getUniqueId())) {
+                player.openInventory(InventoryUtil.getInventory());
+                return;
+            }
     
-
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (!event.getInventory().getTitle().equals(config.getString("INVENTORY_SETTINGS.OPTIONS.TITLE"))) {
-            return;
+            player.sendMessage(
+                cooldownMessage.replace(
+                    "%time%",
+                    String.valueOf(CooldownUtil.getTimeLeft(player.getUniqueId())))
+            );
         }
-
-        ItemStack item = event.getCurrentItem();
-
-        if (item == null) {
-            return;
-        }
-
-        Player player = (Player) event.getWhoClicked();
-
-        CooldownUtil cooldown = new CooldownUtil(player.getUniqueId(), "REFILL", config.getInt("SIGN_SETTINGS.COOLDOWN_OPTIONS.SECONDS"));
-        cooldown.start();
     }
 
     @EventHandler
@@ -96,8 +74,8 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        if (event.getLine(0).equals(config.getString("SIGN_SETTINGS.LINE_TO_SET"))) {
-            int id = 0;
+        if (event.getLine(0).equalsIgnoreCase(config.getString("SIGN_SETTINGS.LINE_TO_SET"))) {
+            byte id = 0;
 
             for (String lines : config.getStringList("SIGN_SETTINGS.LINES")) {
                 event.setLine(id, MessageUtil.translate(lines));

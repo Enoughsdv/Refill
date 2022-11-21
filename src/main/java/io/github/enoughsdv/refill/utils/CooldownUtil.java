@@ -1,60 +1,38 @@
 package io.github.enoughsdv.refill.utils;
 
-import java.util.Map;
-import java.util.UUID;
 import java.util.HashMap;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
-/**
- *
- * @author LCastr0
- *
- */
+import io.github.enoughsdv.refill.RefillPlugin;
+
 public class CooldownUtil {
+    public static final HashMap<UUID, Integer> cooldowns = new HashMap<>();
+  
+    private static int secondsRequeried;
 
-    private final static Map<String, CooldownUtil> cooldowns = new HashMap<String, CooldownUtil>();
-    private long start;
-    private final int timeInSeconds;
-    private final UUID id;
-    private final String cooldownName;
-
-    public CooldownUtil(UUID id, String cooldownName, int timeInSeconds) {
-        this.id = id;
-        this.cooldownName = cooldownName;
-        this.timeInSeconds = timeInSeconds;
+    public static void startUtil(){
+        secondsRequeried = RefillPlugin.getInstance().getConfig().getInt("null");
     }
 
-    public static boolean isInCooldown(UUID id, String cooldownName) {
-        if (getTimeLeft(id, cooldownName) >= 1) {
-            return true;
-        } else {
-            stop(id, cooldownName);
+    public static boolean isInCooldown(UUID id) {
+        if (!cooldowns.containsKey(id)) {
+            cooldowns.put(id, (int)System.currentTimeMillis());
             return false;
         }
-    }
 
-    private static void stop(UUID id, String cooldownName) {
-        cooldowns.remove(id + cooldownName);
-    }
-
-    private static CooldownUtil getCooldown(UUID id, String cooldownName) {
-        return cooldowns.get(id.toString() + cooldownName);
-    }
-
-    public static int getTimeLeft(UUID id, String cooldownName) {
-        CooldownUtil cooldown = getCooldown(id, cooldownName);
-        int f = -1;
-        if (cooldown != null) {
-            long now = System.currentTimeMillis();
-            long cooldownTime = cooldown.start;
-            int totalTime = cooldown.timeInSeconds;
-            int r = (int) (now - cooldownTime) / 1000;
-            f = (r - totalTime) * (-1);
+        if(getTimeLeft(id) <= 0){
+            cooldowns.remove(id);
+            return true;
         }
-        return f;
+        return true;
     }
 
-    public void start() {
-        this.start = System.currentTimeMillis();
-        cooldowns.put(this.id.toString() + this.cooldownName, this);
+    public static int getTimeLeft(UUID id) {
+        int oldTime = CooldownUtil.cooldowns.get(id);
+        int nowTime = (int)System.currentTimeMillis();
+
+        int result =  (int) (TimeUnit.MILLISECONDS.toSeconds(nowTime) - TimeUnit.MILLISECONDS.toSeconds(oldTime));
+        return secondsRequeried - result;
     }
 }
