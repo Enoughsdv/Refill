@@ -46,7 +46,6 @@ public class PlayerListener implements Listener {
         boolean equals = true;
         byte id = 0;
 
-<<<<<<< HEAD
         for(String configLine : signLines){
             if(!sign.getLine(id).equals(configLine)){
                 equals = false;
@@ -58,22 +57,6 @@ public class PlayerListener implements Listener {
         if(equals){
             if (!CooldownUtil.isInCooldown(player.getUniqueId())) {
                 player.openInventory(InventoryUtil.getInventory());
-=======
-        for (String lines : settingLines) {
-
-            if (sign.getLine(id).equalsIgnoreCase(MessageUtil.translate(lines))) {
-
-                if (!CooldownUtil.isInCooldown(player.getUniqueId(), "REFILL")) {
-                    player.openInventory(InventoryUtil.getInventory());
-                    return;
-                }
-
-                player.sendMessage(
-                    cooldownMessage.replace(
-                        "%time%",
-                        String.valueOf(CooldownUtil.getTimeLeft(player.getUniqueId(), "REFILL")))
-                );
->>>>>>> 55f7f9651b9b48a90ebea5c03246af0a80a8ad9b
                 return;
             }
     
