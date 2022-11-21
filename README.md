@@ -1,18 +1,11 @@
-# Refill
-
-It's a basic Refill plugin with cooldown that I was going to make for a network but it closed
-
-### Config
-
-```yml
 SIGN_SETTINGS:
     COOLDOWN_OPTIONS:
         SECONDS: 20
-        IN_COOLDOWN_MESSAGE: "&cYou are currently in cooldown, wait %time% seconds."
+        IN_COOLDOWN_MESSAGE: "&cYou are currently in cooldown, wait %time% minutes."
     LINES:
         - "&r"
-        - "&3&lRefill"
-        - "&7(Right click)"
+        - "&9&lRefill"
+        - "&7(&fRight click&7)"
         - "&r"
     LINE_TO_SET: "[REFILL]"
 
@@ -21,7 +14,7 @@ NO_PERMISSIONS: "&cYou don't have permissions"
 INVENTORY_SETTINGS:
     OPTIONS:
         SIZE: 54
-        TITLE: "&3&Refill Menu"
+        TITLE: "&0&lRefill Menu"
     FILLER:
         MATERIAL: POTION
         DATA: 16421
@@ -44,4 +37,3 @@ INVENTORY_SETTINGS:
         - 283:0, 1, 51
         - 283:0, 1, 52
         - 283:0, 1, 53
-```
