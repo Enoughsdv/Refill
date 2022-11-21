@@ -40,7 +40,11 @@ public class InventoryUtil {
         int fillerData = config.getInt("INVENTORY_SETTINGS.FILLER.DATA");
         int fillerAmount = config.getInt("INVENTORY_SETTINGS.FILLER.AMOUNT");
         Material fillerMaterial = Material.valueOf(config.getString("INVENTORY_SETTINGS.FILLER.MATERIAL"));
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 55f7f9651b9b48a90ebea5c03246af0a80a8ad9b
         ItemStack filterItem = 
             new ItemBuilder(fillerMaterial)
                 .amount(fillerAmount)
