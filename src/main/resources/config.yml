@@ -9,13 +9,19 @@ SIGN_SETTINGS:
         - "&r"
     LINE_TO_SET: "[REFILL]"
 
-NO_PERMISSIONS: "&cYou don't have permissions"
+MESSAGES:
+    NO_PERMISSIONS: "&cYou have no permissions"
+    BREAK_FAILED: "&cYou cannot break this sign"
+    BREAK_SUCCESSFULLY: "&aYou have successfully removed a refill sign."
 
 INVENTORY_SETTINGS:
     OPTIONS:
         SIZE: 54
-        TITLE: "&3&Refill Menu"
+        TITLE: "&3&lRefill Menu"
     FILLER:
+        # Soup refill example
+        # MATERIAL: MUSHROOM_SOUP
+        # DATA: 0
         MATERIAL: POTION
         DATA: 16421
         AMOUNT: 1

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Refill:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Refill_jar</output-path>
+    <root id="archive" name="Refill.jar">
+      <element id="module-output" name="Refill" />
+    </root>
+  </artifact>
+</component>
