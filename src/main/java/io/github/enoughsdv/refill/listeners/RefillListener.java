@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.EventHandler;
@@ -40,7 +39,7 @@ public class RefillListener implements Listener {
         }
 
         Sign sign = (Sign) block.getState();
-        short id = 0;
+        int id = 0;
 
         for (String lines : config.getStringList("SIGN_SETTINGS.LINES")) {
             if (sign.getLine(id).equalsIgnoreCase(MessageUtil.translate(lines))) {
@@ -62,8 +61,8 @@ public class RefillListener implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
-        if (!event.getInventory().getTitle()
-                .equalsIgnoreCase(MessageUtil.translate(config.getString("INVENTORY_SETTINGS.OPTIONS.TITLE")))) {
+        if (!event.getView().getTitle()
+                .equals(MessageUtil.translate(config.getString("INVENTORY_SETTINGS.OPTIONS.TITLE")))) {
             return;
         }
 
@@ -97,13 +96,14 @@ public class RefillListener implements Listener {
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event) {
         Player player = event.getPlayer();
+        Block block = event.getBlock();
 
-        if (!(event.getBlock().getState() instanceof Sign)) {
+        if (!(block.getState() instanceof Sign)) {
             return;
         }
 
-        Sign sign = (Sign) event.getBlock().getState();
-        short id = 0;
+        Sign sign = (Sign) block.getState();
+        int id = 0;
 
         for (String lines : config.getStringList("SIGN_SETTINGS.LINES")) {
             if (sign.getLine(id).equalsIgnoreCase(MessageUtil.translate(lines))) {
@@ -115,7 +115,6 @@ public class RefillListener implements Listener {
 
                 if (!event.isCancelled()) {
                     player.sendMessage(MessageUtil.translate(config.getString("MESSAGES.BREAK_SUCCESSFULLY")));
-                    event.setCancelled(true);
                 }
                 return;
             }

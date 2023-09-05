@@ -1,6 +1,6 @@
 # Refill
 
-It's a basic Refill plugin with cooldown that I was going to make for a network but it closed
+A super basic refill code that is based with signs
 
 ### Config
 
